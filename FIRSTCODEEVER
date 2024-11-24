@@ -1,0 +1,69 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace EJERCICIO_SACAR_VALOR_MAXIMO_DE_N
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //SACAR EL VALOR MAXIMO DE N NUMEROS HASTA QUE EL USUARIO INTRODUZCA 0 O NEGATIVOS.
+            //AL INTRODUCIR 0  O NEGATIVOS EL PROGRAMA TERMINA
+            int num;
+            int maximo = int.MinValue; // Inicializamos con el valor más bajo posible para un entero
+
+            Console.WriteLine("Averigüemos el valor máximo de N números.");
+            Console.WriteLine("Introduce números enteros. Escribe 0 o un número negativo para terminar.");
+            Console.WriteLine("Escribe 'mostrar' si quieres ver el numero máximo hasta el momento");
+
+            while (true)
+            {
+                string entrada = Console.ReadLine();//solo puede haber un readline por lo que
+                                                    //por defecto hacemos string y mas tarde
+                                                    //cuando necesitemos que lea numero hacemos
+                                                    //el try.parse a int
+                                                    //lo hacemos una variaable paraa cambiarle 
+                                                    //el valor cuando sea necesario.
+
+                if (entrada.ToLower() == "mostrar")//Tolower hace insensible a las mayusuculas          
+                {
+                    if (maximo == int.MinValue)
+                    {
+                        Console.WriteLine("Aun no se ha ingresado numero valido");
+                    }
+                    else
+                    {
+                        Console.WriteLine(maximo);
+                    }
+                    continue; //vuelve al inicio del bucle despues de mostrar la entrada.
+                               // si el user no escribe "mostrar" este continue no se usa
+                               // ya que salta al bloque del int.tryparse
+                }
+
+
+                if (int.TryParse(entrada, out num)) // Validar entrada, y cambio a int de la 
+                                                    //readline Entrada
+                {
+                    if (num <= 0) // Determinar si el número es 0 o negativo
+                    {
+                        break;
+                    }
+
+                    if (num > maximo) // Actualizar el valor máximo si es mayor
+                    {
+                        maximo = num;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Introduce un numero entero o 'mostrar'");
+                }
+            }
+
+        }
+    }
+}
